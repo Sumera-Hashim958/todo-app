@@ -1,0 +1,32 @@
+services:
+  # FastAPI Backend
+  - type: web
+    name: todo-api
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: "cd apps/api && pip install -r requirements.txt"
+    startCommand: "cd apps/api && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./test.db
+      - key: ENVIRONMENT
+        value: production
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_EXPIRATION_HOURS
+        value: 24
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: AGENT_TEMPERATURE
+        value: 0.7
+      - key: CONTEXT_MESSAGE_LIMIT
+        value: 20
+      - key: SECRET_KEY
+        generateValue: true
+      - key: BETTER_AUTH_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
